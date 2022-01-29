@@ -1,9 +1,6 @@
 package com.kayabank.springbootbank.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -12,17 +9,16 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table
+@ToString
+@Table(name = "customer")
 public class Customer {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private String id;
 
     private String name;
-    private String address;
+    @Column(name = "date_of_birth")
+    private Integer dateOfBirth;
     private City city;
-    private String email;
-    private String phone;
-    private Integer birthDate;
+    private String address;
 }
