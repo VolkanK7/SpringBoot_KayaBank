@@ -1,5 +1,5 @@
 package com.kayabank.springbootbank.model;
 
 public enum Currency {
-    TRY,EURO,USD
+    TRY,EUR,USD
 }

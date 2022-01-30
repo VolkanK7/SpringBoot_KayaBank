@@ -30,8 +30,8 @@ public class CustomerController {
     }
 
     @GetMapping("/getcustomer/{id}")
-    public ResponseEntity<CustomerDto> getCustomerById(@PathVariable("id") String id){
-        return ResponseEntity.ok(customerService.getCustomerById(id));
+    public ResponseEntity<CustomerDto> getCustomerDtoById(@PathVariable("id") String id){
+        return ResponseEntity.ok(customerService.getCustomerDtoById(id));
     }
 
    @DeleteMapping("/deletecustomer/{id}")

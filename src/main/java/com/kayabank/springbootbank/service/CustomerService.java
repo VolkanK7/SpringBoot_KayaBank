@@ -47,7 +47,7 @@ public class CustomerService {
         return customerDtoList;
     }
 
-    public CustomerDto getCustomerById(String id) {
+    public CustomerDto getCustomerDtoById(String id) {
         Optional<Customer> customerOptional = customerRepository.findById(id);
 
        return customerOptional.map(customerDtoConverter::convert)
@@ -72,5 +72,10 @@ public class CustomerService {
         });
         return customerOptional.map(customerDtoConverter::convert)
                 .orElseThrow(() -> new CustomerNotFoundException("Customer Id Not Found!"));
+    }
+
+    protected Customer getCustomerById(String id){
+        return customerRepository.findById(id)
+                .orElseThrow(() -> new CustomerNotFoundException("Customer Not Found!"));
     }
 }

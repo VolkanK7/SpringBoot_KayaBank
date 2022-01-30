@@ -1,9 +1,6 @@
 package com.kayabank.springbootbank.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -13,15 +10,16 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table
+@Builder
 public class Account {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long accountId;
+    private String id;
 
-    private Long customerId;
-    private Integer createdYear;
-    private Currency currency;
+    private String customerId;
     private Double balance;
+    private City city;
+    private Currency currency;
+
 
 }
