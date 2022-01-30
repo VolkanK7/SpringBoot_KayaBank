@@ -46,4 +46,15 @@ public class AccountController {
         accountService.deleteAccount(id);
         return ResponseEntity.ok("Account Deleted!");
     }
+
+    @PutMapping("/withdraw/{id}/{amount}")
+    public ResponseEntity<AccountDto> withdrawMoney(@PathVariable String id,@PathVariable Double amount){
+        return ResponseEntity.ok(accountService.withdrawMoney(id, amount));
+    }
+
+    @PutMapping("/addmoney/{id}/{amount}")
+    public ResponseEntity<AccountDto> addMoney(@PathVariable String id,@PathVariable Double amount){
+        return ResponseEntity.ok(accountService.addMoney(id, amount));
+    }
+
 }
