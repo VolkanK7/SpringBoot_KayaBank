@@ -51,4 +51,10 @@ public class CustomerService {
        return customerOptional.map(customerDtoConverter::convert)
                 .orElseThrow(() -> new CustomerNotFoundException("Customer Id Not Found!"));
     }
+
+    public void deleteCustomerById(String id) {
+        Customer customer = customerRepository.findById(id)
+                .orElseThrow(() -> new CustomerNotFoundException("Customer Id Not Found!"));
+        customerRepository.delete(customer);
+    }
 }
