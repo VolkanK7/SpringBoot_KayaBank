@@ -2,7 +2,6 @@ package com.kayabank.springbootbank.controller;
 
 import com.kayabank.springbootbank.dto.AccountDto;
 import com.kayabank.springbootbank.dto.CreateAccountRequest;
-import com.kayabank.springbootbank.dto.CustomerDto;
 import com.kayabank.springbootbank.dto.UpdateAccountRequest;
 import com.kayabank.springbootbank.service.AccountService;
 import org.springframework.http.ResponseEntity;
