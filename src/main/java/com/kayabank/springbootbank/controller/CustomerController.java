@@ -27,4 +27,9 @@ public class CustomerController {
     public ResponseEntity<List<CustomerDto>> getAllCustomers(){
         return ResponseEntity.ok(customerService.getAllCustomers());
     }
+
+    @GetMapping("getcustomer/{id}")
+    public ResponseEntity<CustomerDto> getCustomerById(@PathVariable("id") String id){
+        return ResponseEntity.ok(customerService.getCustomerById(id));
+    }
 }

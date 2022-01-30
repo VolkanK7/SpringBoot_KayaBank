@@ -3,6 +3,7 @@ package com.kayabank.springbootbank.service;
 import com.kayabank.springbootbank.dto.CreateCustomerRequest;
 import com.kayabank.springbootbank.dto.CustomerDto;
 import com.kayabank.springbootbank.dto.CustomerDtoConverter;
+import com.kayabank.springbootbank.exception.CustomerNotFoundException;
 import com.kayabank.springbootbank.model.City;
 import com.kayabank.springbootbank.model.Customer;
 import com.kayabank.springbootbank.repository.CustomerRepository;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CustomerService {
@@ -41,5 +43,12 @@ public class CustomerService {
             customerDtoList.add(customerDtoConverter.convert(customer));
         }
         return customerDtoList;
+    }
+
+    public CustomerDto getCustomerById(String id) {
+        Optional<Customer> customerOptional = customerRepository.findById(id);
+
+       return customerOptional.map(customerDtoConverter::convert)
+                .orElseThrow(() -> new CustomerNotFoundException("Customer Id Not Found!"));
     }
 }
