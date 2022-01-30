@@ -4,7 +4,9 @@ import com.kayabank.springbootbank.dto.AccountDto;
 import com.kayabank.springbootbank.dto.AccountDtoConverter;
 import com.kayabank.springbootbank.dto.CreateAccountRequest;
 import com.kayabank.springbootbank.dto.UpdateAccountRequest;
+import com.kayabank.springbootbank.exception.AccountNotFoundException;
 import com.kayabank.springbootbank.exception.CustomerNotFoundException;
+import com.kayabank.springbootbank.exception.InsufficientBalanceException;
 import com.kayabank.springbootbank.model.Account;
 import com.kayabank.springbootbank.model.Customer;
 import com.kayabank.springbootbank.repository.AccountRepository;
@@ -76,5 +78,29 @@ public class AccountService {
 
     public void deleteAccount(String id) {
         accountRepository.deleteById(id);
+    }
+    public AccountDto withdrawMoney(String id, Double amount){
+        Optional<Account> accountOptional = accountRepository.findById(id);
+        accountOptional.ifPresent(account -> {
+            if(account.getBalance() > amount){
+                account.setBalance(account.getBalance() - amount);
+                accountRepository.save(account);
+            }else{
+                throw new InsufficientBalanceException("Insufficient Balance!\nID: "+id
+                        +"\nBalance: "+account.getBalance() + "\nAmount: "+amount);
+            }
+        });
+        return accountOptional.map(accountDtoConverter::convert)
+                .orElseThrow(() -> new AccountNotFoundException("Account Not Found!"));
+    }
+
+    public AccountDto addMoney(String id, Double amount){
+        Optional<Account> accountOptional = accountRepository.findById(id);
+        accountOptional.ifPresent(account -> {
+                account.setBalance(account.getBalance() + amount);
+                accountRepository.save(account);
+        });
+        return accountOptional.map(accountDtoConverter::convert)
+                .orElseThrow(() -> new AccountNotFoundException("Account Not Found!"));
     }
 }
