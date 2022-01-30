@@ -9,11 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateCustomerRequest {
+public class CreateCustomerRequest extends BaseCustomerRequest{
 
     private String id;
-    private String name;
-    private Integer dateOfBirth;
-    private CityDto city;
-    private String address;
 }
