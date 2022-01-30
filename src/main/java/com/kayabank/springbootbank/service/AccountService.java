@@ -34,7 +34,6 @@ public class AccountService {
                 .customerId(createAccountRequest.getCustomerId())
                 .city(createAccountRequest.getCity())
                 .build();
-
         return accountDtoConverter.convert(accountRepository.save(account));
     }
 }
