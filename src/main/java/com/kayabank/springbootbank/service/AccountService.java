@@ -77,6 +77,8 @@ public class AccountService {
     }
 
     public void deleteAccount(String id) {
+        Account account = accountRepository.findById(id)
+                        .orElseThrow(() -> new AccountNotFoundException("Account Not Found!"));
         accountRepository.deleteById(id);
     }
     public AccountDto withdrawMoney(String id, Double amount){
@@ -86,8 +88,8 @@ public class AccountService {
                 account.setBalance(account.getBalance() - amount);
                 accountRepository.save(account);
             }else{
-                throw new InsufficientBalanceException("Insufficient Balance!\nID: "+id
-                        +"\nBalance: "+account.getBalance() + "\nAmount: "+amount);
+                throw new InsufficientBalanceException("Insufficient Balance! ID: "+id
+                        +" Balance: "+account.getBalance() + " Amount: "+amount);
             }
         });
         return accountOptional.map(accountDtoConverter::convert)
