@@ -3,10 +3,12 @@ package com.kayabank.springbootbank.service;
 import com.kayabank.springbootbank.dto.CreateCustomerRequest;
 import com.kayabank.springbootbank.dto.CustomerDto;
 import com.kayabank.springbootbank.dto.CustomerDtoConverter;
+import com.kayabank.springbootbank.dto.UpdateCustomerRequest;
 import com.kayabank.springbootbank.exception.CustomerNotFoundException;
 import com.kayabank.springbootbank.model.City;
 import com.kayabank.springbootbank.model.Customer;
 import com.kayabank.springbootbank.repository.CustomerRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -56,5 +58,19 @@ public class CustomerService {
         Customer customer = customerRepository.findById(id)
                 .orElseThrow(() -> new CustomerNotFoundException("Customer Id Not Found!"));
         customerRepository.delete(customer);
+    }
+
+
+    public CustomerDto updateCustomerById(String id, UpdateCustomerRequest updateCustomerRequest) {
+        Optional<Customer> customerOptional = customerRepository.findById(id);
+        customerOptional.ifPresent(customer -> {
+            customer.setName(updateCustomerRequest.getName());
+            customer.setAddress(updateCustomerRequest.getAddress());
+            customer.setDateOfBirth(updateCustomerRequest.getDateOfBirth());
+            customer.setCity(City.valueOf(updateCustomerRequest.getCity().name()));
+            customerRepository.save(customer);
+        });
+        return customerOptional.map(customerDtoConverter::convert)
+                .orElseThrow(() -> new CustomerNotFoundException("Customer Id Not Found!"));
     }
 }
