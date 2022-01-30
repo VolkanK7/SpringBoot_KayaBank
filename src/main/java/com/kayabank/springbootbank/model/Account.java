@@ -9,13 +9,14 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table
+@Table(name = "account")
 @Builder
 public class Account {
 
     @Id
     private String id;
 
+    @Column(name = "customer_id")
     private String customerId;
     private Double balance;
     private City city;
