@@ -3,6 +3,7 @@ package com.kayabank.springbootbank.service;
 import com.kayabank.springbootbank.dto.AccountDto;
 import com.kayabank.springbootbank.dto.AccountDtoConverter;
 import com.kayabank.springbootbank.dto.CreateAccountRequest;
+import com.kayabank.springbootbank.exception.AccountNotFoundException;
 import com.kayabank.springbootbank.model.Account;
 import com.kayabank.springbootbank.model.City;
 import com.kayabank.springbootbank.model.Currency;
@@ -72,6 +73,46 @@ public class AccountServiceTest {
         Mockito.verify(customerService).getCustomerById("12345");
         Mockito.verify(accountRepository).save(account);
         Mockito.verify(accountDtoConverter).convert(account);
+    }
 
+
+    @Test(expected = RuntimeException.class)
+    public void whenCreateAccountCalledWithNonExistCustomer_itShouldReturnRuntimeException(){
+        CreateAccountRequest createAccountRequest = new CreateAccountRequest("1234");
+        createAccountRequest.setCustomerId("12345");
+        createAccountRequest.setBalance(100.0);
+        createAccountRequest.setCity(City.ISTANBUL);
+        createAccountRequest.setCurrency(Currency.TRY);
+
+        Mockito.when(customerService.getCustomerById("12345")).thenReturn(Customer.builder().build());
+
+        AccountDto expectedAccountDto = AccountDto.builder().build();
+        AccountDto result = accountService.createAccount(createAccountRequest);
+
+        Assert.assertEquals(expectedAccountDto, result);
+
+        Mockito.verifyNoInteractions(accountRepository);
+        Mockito.verifyNoInteractions(accountDtoConverter);
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void whenCreateAccountCalledWithCustomerWithoutId_itShouldReturnRuntimeException(){
+        CreateAccountRequest createAccountRequest = new CreateAccountRequest("1234");
+        createAccountRequest.setCustomerId("12345");
+        createAccountRequest.setBalance(100.0);
+        createAccountRequest.setCity(City.ISTANBUL);
+        createAccountRequest.setCurrency(Currency.TRY);
+
+        Mockito.when(customerService.getCustomerById("12345")).thenReturn(Customer.builder()
+                .id(" ")
+                .build());
+
+        AccountDto expectedAccountDto = AccountDto.builder().build();
+        AccountDto result = accountService.createAccount(createAccountRequest);
+
+        Assert.assertEquals(expectedAccountDto, result);
+
+        Mockito.verifyNoInteractions(accountRepository);
+        Mockito.verifyNoInteractions(accountDtoConverter);
     }
 }
