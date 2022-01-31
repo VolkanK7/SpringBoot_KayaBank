@@ -32,7 +32,7 @@ public class AccountService {
     public AccountDto createAccount(CreateAccountRequest createAccountRequest){
         Customer customer = customerService.getCustomerById(createAccountRequest.getCustomerId());
         if(customer.getId() == null || customer.getId().trim().equals("")){
-            throw new CustomerNotFoundException("Customer Not Found!");
+             throw new CustomerNotFoundException("Customer Not Found!");
         }
         Account account = Account.builder()
                 .id(createAccountRequest.getId())
