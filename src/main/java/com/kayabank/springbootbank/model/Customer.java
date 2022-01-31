@@ -9,8 +9,10 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @ToString
 @Table(name = "customer")
+@EqualsAndHashCode
 public class Customer {
 
     @Id

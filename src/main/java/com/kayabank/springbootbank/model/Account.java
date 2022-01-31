@@ -11,6 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Table(name = "account")
 @Builder
+@EqualsAndHashCode
 public class Account {
 
     @Id
