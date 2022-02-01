@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -24,11 +25,10 @@ public class Customer {
     @NotBlank(message = "Name must be not null")
     @Size(min = 3, message = "Name must be min 3 of characters")
     private String name;
-    @NotBlank(message = "Date of birth must be not blank")
+    @NotNull(message = "Date of birth must be not null")
     @Column(name = "date_of_birth")
     private Integer dateOfBirth;
-    @NotBlank(message = "Date of birth must be not blank")
     private City city;
-    @NotBlank(message = "Date of birth must be not blank")
+    @NotBlank(message = "Address must be not blank")
     private String address;
 }
