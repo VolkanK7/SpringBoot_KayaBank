@@ -7,6 +7,7 @@ import com.kayabank.springbootbank.service.CustomerService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -20,7 +21,7 @@ public class CustomerController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<CustomerDto> createCustomer(@RequestBody CreateCustomerRequest createCustomerRequest){
+    public ResponseEntity<CustomerDto> createCustomer(@Valid @RequestBody CreateCustomerRequest createCustomerRequest){
         return ResponseEntity.ok(customerService.createCustomer(createCustomerRequest));
     }
 
