@@ -99,8 +99,13 @@ public class AccountService {
     public AccountDto addMoney(String id, Double amount){
         Optional<Account> accountOptional = accountRepository.findById(id);
         accountOptional.ifPresent(account -> {
+            if(amount >= 50){
                 account.setBalance(account.getBalance() + amount);
                 accountRepository.save(account);
+            }else{
+                throw new InsufficientBalanceException("Amount must be min 50");
+            }
+
         });
         return accountOptional.map(accountDtoConverter::convert)
                 .orElseThrow(() -> new AccountNotFoundException("Account Not Found!"));
